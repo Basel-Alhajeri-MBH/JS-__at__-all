@@ -1,5 +1,5 @@
 /*
- * (C) Basel.Al_hajeri?.MBH() 2021 All Rights Reserved.
+ * (C) 2021 Basel.Al_hajeri?.MBH() All Rights Reserved.
  * LOVE YOU JS AS YOU ARE
  * JS@*: JS at All is a code generates all the JS offline and iterates all global objects, functions, and whatever till no missed property or method .And down are JS datatypes, some important JS constructor functions ,and DOM Elements whatever.. including details and many things*
  */
@@ -36,6 +36,16 @@ void function(global, factory) {
     if(!Object.getOwnPropertyNames) return;
     exports = exports&&exports.Object||Object; // e?e.o:o; for undefined the globalThis and window in global strict e&e.o|o;
     var name = 'getAllPropertyNames';
+    var bind = Function.prototype.bind || function bind(bound) {
+        // MBH Function.prototype.bind polyfill really was thought that bind.released & apply.released & call.released === 1 but in MDN browser compatibility the bind works in IE9+ && Safari6+
+        var _this = this;
+        if ('function'!==typeof _this) {
+            throw new TypeError('Bind must be called on a function');
+        }
+        return function() {
+            return _this.apply(bound, arguments);
+        };
+    };
     exports[name] = function getAllPropertyNames(object, split__proto__) { // why there is no syntex like function ['functionName']() {}
         var properties = [];
         var object__proto__ = object;
@@ -47,9 +57,11 @@ void function(global, factory) {
         }
         return properties;
     };
-    exports[name].toString = function toString() { 
-        return 'function '+name+(~Object.toString().indexOf('\n') ? '() {\n    [MBH code]\n}' : '() { [MBH code] }');
-    }.bind(exports), Object.defineProperty(exports[name], 'toString', {
+    exports[name].toString = bind.call(
+        function toString() { 
+            return 'function '+name+(~Object.toString().indexOf('\n') ? '() {\n    [MBH code]\n}' : '() { [MBH code] }');
+        }, exports
+    ), Object.defineProperty(exports[name], 'toString', {
         writable: true,
         configurable: true,
         enumerable: false,
@@ -78,6 +90,16 @@ void function(global, factory) {
             return []; // for IE[1-8] 
         }; // and if the browser does not support
     }
+    var bind = Function.prototype.bind || function bind(bound) {
+        // MBH Function.prototype.bind polyfill
+        var _this = this;
+        if ('function'!==typeof _this) {
+            throw new TypeError('Bind must be called on a function');
+        }
+        return function() {
+            return _this.apply(bound, arguments);
+        };
+    };
     var globalObjects = Object.getAllPropertyNames(global, true);
     var toString = Object.prototype.toString;
     var isExtensible = Object.isExtensible || function() {
@@ -186,12 +208,12 @@ void function(global, factory) {
             else 
                 this.className += ' ' + map
                   .call(
-                      arguments, function(item) {
+                      arguments, bind.call(function(item) {
                           return ~indexOf.call(
                               this.className.
                                 split(' '), item
                        ) ? '' : item ;
-                      }.bind(this)
+                      }, this)
                   ).join(' '); 
         },
         remove() {
@@ -302,9 +324,9 @@ void function(global, factory) {
     var funcForm = /^function\s*([^\s\(]*)[^\(]*.([^\)]*)[^{]*.([^]*)\}$/;
     var obj_tstForm = /^\[object\s(.*?)\]$/;
     var doc = global.document;
-    var node = doc.createElement.bind(doc);
-    var nodeList = doc.querySelectorAll.bind(doc);
-    var text = doc.createTextNode.bind(doc);
+    var node = bind.call(doc.createElement, doc);
+    var nodeList = bind.call(doc.querySelectorAll, doc);
+    var text = bind.call(doc.createTextNode, doc);
     var listener = global.addEventListener;
     var typedef = {
         undefined: {
@@ -466,9 +488,9 @@ void function(global, factory) {
         }
     }); // --IE11 ?!! as I remember
     else if( !('remove' in Element.prototype) ) Object.defineProperty(Element.prototype, 'remove', {
-        value: function remove() {
+        value: bind.call(function remove() {
             this.hidden = this.parentNode ? this.parentNode.removeChild(this) : true;
-        }.bind(global)
+        }, global)
     });
     try {
         Object.getAllPropertyNames(1);
@@ -988,10 +1010,10 @@ void function(global, factory) {
             listener.call(
                 unv,
                 'click',
-                function() {
+                bind.call(function() {
                     await(0.5);
                     this.hidden = !this.hidden;
-                }.bind(et)
+                }, et)
             );
             append.call(
                 parentNode, unv
@@ -1339,7 +1361,6 @@ void function(global, factory) {
         else if(length < 3) return '#'+Array(4-length).join(0)+hex;
         return '#'+hex;
     }
-	if('_cordovaNative' in global) delete global._cordovaNative;
 }(this && (this.window || this.self) || function(global) {
     'use strict';
     var toString = Object.prototype.toString;
@@ -1349,9 +1370,9 @@ void function(global, factory) {
     var out;
     if(Object.getAllPropertyNames) {
         if('undefined'!==typeof console) {
-            jsout = console.log.bind(console);
+            jsout = console.log;
         } else if('undefined'!==typeof print) {
-            jsout = print.bind(global);
+            jsout = print;
         }
         top: for(var ps of Object.getAllPropertyNames(global, true)) {
             if(null!==ps[ 0 ]&&indent.length) {
