@@ -21,6 +21,7 @@ body, code {
     box-shadow: 0 -2.5px 5px black;
     position: fixed;
     width: 100%;
+    min-height: 47.5px;
     max-height: 100vh;
     overflow-y: auto;
     top: 0;
@@ -63,7 +64,7 @@ input[type=search]:focus {
 }
 
 .loader {
-    height: 1.5px;
+    height: 1.25px;
     background-color: deepskyblue;
     position: fixed;
     top: 47.5px;
