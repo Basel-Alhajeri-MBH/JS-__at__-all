@@ -1395,9 +1395,11 @@ void function(global, factory) {
                 jsout(indent + p + ': ' + out);
                 jsout(Array(p.length+out.length+indent.length+3).join('-'));
             }
-            for(p of Object.getOwnPropertySymbols(ps[ 0 ])) {
-                jsout(indent + '*['+p.description+']: '+(out = ps[ 0 ][ p ]));
-                jsout(Array(p.description.length+out.length+indent.length+5).join('-'));
+            if('function'===typeof Symbol) {
+                for(p of Object.getOwnPropertySymbols(ps[ 0 ])) {
+                    jsout(indent + '*['+p.description+']: '+(out = ps[ 0 ][ p ]));
+                    jsout(Array(p.description.length+out.length+indent.length+5).join('-'));
+                }
             }
             indent += Array(5).join(' ');
         }
