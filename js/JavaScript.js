@@ -1372,7 +1372,7 @@ void function(global, factory) {
         if('undefined'!==typeof console) {
             jsout = console.log.bind(console);
         } else if('undefined'!==typeof print) {
-            jsout = print,bind(global);
+            jsout = print.bind(global);
         }
         top: for(var ps of Object.getAllPropertyNames(global, true)) {
             if(null!==ps[ 0 ]&&indent.length) {
