@@ -565,7 +565,7 @@ void function(global, factory) {
                 );
             }
         };
-        if(!/^JS.?(@|[Aa]t).*?(\*|[Aa]l{2})$/.test(doc.title)) {
+        if(!/^JS.?(@|[aA]t).*?(\*|[aA]l{2})$/.test(doc.title)) {
             doc.title = 'JS @__at__ *all';
         }
         defaultSearch = node('input');
