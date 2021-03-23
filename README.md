@@ -3,11 +3,12 @@ A JS generator for show all JS objects|topics with its followers by __\_\_click\
 
 *supports in all envs with a new method in Object* 
 > `Object.getAllPropertyNames`: a new method by [**MBH**](https://github.com/Basel-Alhajeri-MBH) shows the object properties and if the second parameter sets truth will split properties in arrays first array is the parent \_\_proto\_\_ and the second is its children \
-> #### Sample :\
+> #### Sample :
 > ```javascript
-> Object.getAllPropertyNames(Math); // ["abs","acos","acosh","asin","asinh","atan","atanh","atan2","ceil","cbrt","expm1","clz32","cos","cosh","exp","floor","fround","hypot","imul","log","log1p","log2","log10","max","min","pow","random","round","sign","sin","sinh","sqrt","tan","tanh","trunc","E","LN10","LN2","LOG10E","LOG2E","PI","SQRT1_2","SQRT2","constructor","__defineGetter__","__defineSetter__","hasOwnProperty","__lookupGetter__","__lookupSetter__","isPrototypeOf","propertyIsEnumerable","toString","valueOf","__proto__","toLocaleString"]\
+> Object.getAllPropertyNames(Math); // ["abs","acos","acosh","asin","asinh","atan","atanh","atan2","ceil","cbrt","expm1","clz32","cos","cosh","exp","floor","fround","hypot","imul","log","log1p","log2","log10","max","min","pow","random","round","sign","sin","sinh","sqrt","tan","tanh","trunc","E","LN10","LN2","LOG10E","LOG2E","PI","SQRT1_2","SQRT2","constructor","__defineGetter__","__defineSetter__","hasOwnProperty","__lookupGetter__","__lookupSetter__","isPrototypeOf","propertyIsEnumerable","toString","valueOf","__proto__","toLocaleString"]
 > Object.getAllPropertyNames(Math, true); //[[[object Math],["abs","acos","acosh","asin","asinh","atan","atanh","atan2","ceil","cbrt","expm1","clz32","cos","cosh","exp","floor","fround","hypot","imul","log","log1p","log2","log10","max","min","pow","random","round","sign","sin","sinh","sqrt","tan","tanh","trunc","E","LN10","LN2","LOG10E","LOG2E","PI","SQRT1_2","SQRT2"]],[[object Object],["constructor","__defineGetter__","__defineSetter__","hasOwnProperty","__lookupGetter__","__lookupSetter__","isPrototypeOf","propertyIsEnumerable","toString","valueOf","__proto__","toLocaleString"]]\
-> ```\
+> 
+ ```
 > And in ES5 Edition it throws a TypeError with non-object
 
 
