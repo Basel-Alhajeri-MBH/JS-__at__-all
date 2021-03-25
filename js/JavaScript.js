@@ -9,7 +9,7 @@ void function(global, factory) {
     'use strict'; 
     /*
      * The Object.getAllPropertyNames method returns an array of all properties & method and splits the protos if the second argument is a truth value e.g. Object.getAllPropertyNames([], true);
-     * In ES5 if the first argument is not an object then it will throw a TypeError
+     * In ES5 if the first parameter is not an object then it will throw a TypeError
      # Browser compatibility :
      +------------------+---------+--------+
      | browser          | Disktop | Mobile |
@@ -43,6 +43,7 @@ void function(global, factory) {
             throw new TypeError('Bind must be called on a function');
         }
         return function() {
+            // [native]
             return _this.apply(bound, arguments);
         };
     };
@@ -50,10 +51,11 @@ void function(global, factory) {
         var properties = [];
         var object__proto__ = object;
         var objectValueOf;
-        if(undefined!==object)
-        for(; null!==object; object = Object.getPrototypeOf(object)) { // undefined==null
-            objectValueOf = Object.getOwnPropertyNames(object);
-            Array.prototype.push.apply(properties, split__proto__ ? [[object, objectValueOf]] : objectValueOf);
+        if(undefined!==object) {
+            for(; null!==object; object = Object.getPrototypeOf(object)) { // undefined==null
+                objectValueOf = Object.getOwnPropertyNames(object);
+                Array.prototype.push.apply(properties, split__proto__ ? [[object, objectValueOf]] : objectValueOf);
+            }
         }
         return properties;
     };
@@ -65,13 +67,13 @@ void function(global, factory) {
         writable: true,
         configurable: true,
         enumerable: false,
-    }); // bound anyway... and it may also out of the __proto__ so it will be an own property
+    }); // bound anyway *itktw... and it may also out of the __proto__ so it will be an own property
     Object.defineProperty(exports, name, {
         enumerable: false,
         writable: true,
         configurable: true
     }); Object.defineProperty(exports[name], 'prototype', {
-        value: undefined, // delete 50%
+        value: undefined, // delete 50% -> cancel instanceof operator
         writable: false,
         configurable: false,
     });
@@ -164,7 +166,7 @@ void function(global, factory) {
         if(!_this.length) {
             throw new TypeError('Reduce of empty array with no initial value');
         }
-        initialValue = this[0];
+        initialValue = _this[0];
         for(var i = 1, len = _this.length; i < len; i++) {
             initialValue = callback(initialValue, _this[i], i, _this);
         }
@@ -624,7 +626,17 @@ void function(global, factory) {
             t2 = node('p'),
             t3 = node('p'),
             t4 = node('p');
-        var d, n;
+        var opts = [
+            [splitProtos, text('split protos')],
+            [defaultSearch, text('default search by name')],
+            [deepSearch, text('deep search')],
+            [useRegExp, text('use RegExp - search')],
+            [ignoreCases, text('ignore cases - search')],
+            [searchResult, text('search on result')],
+            [searchType, text('search with type')],
+            [searchConstructor, text('search with constructor')]
+        ];
+        var d, i, n;
         if( !nodeList('.loader').length ) 
         {
             classList.add
@@ -642,16 +654,7 @@ void function(global, factory) {
           );
         dialog.hidden = true;
         for(d in ls) {
-            fds: for(n of [
-                [splitProtos, text('split protos')],
-                [defaultSearch, text('default search by name')],
-                [deepSearch, text('deep search')],
-                [useRegExp, text('use RegExp - search')],
-                [ignoreCases, text('ignore cases - search')],
-                [searchResult, text('search on result')],
-                [searchType, text('search with type')],
-                [searchConstructor, text('search with constructor')]
-            ][ d ]) {
+            fds: for(i = 0, n = opts[ d ][ 0 ]; i !== opts[ d ].length; n = opts[ d ][ ++ i ]) {
                 if(n instanceof HTMLInputElement) {
                     n.type = 'checkbox';
                     if(+d) {
@@ -767,10 +770,11 @@ void function(global, factory) {
             if(typedef[d].isAvailable)
                 insertJSElement(typedef[d].example, {});
         append.call(body, t3);
-        for(d of smConstructorFunctions)
-            insertJSElement(d, {});
+        forEach.call(smConstructorFunctions, function(c) {
+            insertJSElement(c, {});
+        })
         append.call(body, t4);
-        for(d of "a\
+        forEach.call("a\
         abbr\
         address\
         area\
@@ -879,7 +883,7 @@ void function(global, factory) {
         ul\
         var\
         video\
-        wbr".split(/\W+/)) 
+        wbr".split(/\W+/), function(d) {
             if (
                 !(node(d) instanceof HTMLUnknownElement)
             )
@@ -893,6 +897,7 @@ void function(global, factory) {
                         configurable: true
                     })
                 );
+            })
         // still DOM Events, CSSOM, svg namespace elements ,and whatever can make load too late however they still found in the Global Objects > itatewdnbacr
     }
     function search() {
@@ -1290,13 +1295,13 @@ void function(global, factory) {
         var ownPs = !es5||'object'===typeof object ? splitProtos.checked ? Object.getAllPropertyNames(object, true) : Object.getOwnPropertyNames(object) : [];
         var spSy = function(object) {
             if(typedef.symbol.isAvailable) {
-                for(var s of Object.getOwnPropertySymbols(object)) {
+                forEach.call(Object.getOwnPropertySymbols(object), function(s) {
                     insertJSElement(s, object, indent, parentNode, {
                         prefix: '*',
                         color: 'red',
                         node: 'sup'
                     });
-                }
+                });
             }
         };
         length = !splitProtos.checked ? ownPs.length : reduce.call(ownPs, function(n, e) {
@@ -1305,11 +1310,11 @@ void function(global, factory) {
         }, 0);
         await();
         if(!splitProtos.checked) {
-            for(p of ownPs) {
+            forEach.call(ownPs, function(p) {
                 if(hasOwnProperty.call(object, p)) {
                     insertJSElement(p, object, indent, parentNode);
                 }
-            }
+            });
             spSy(object);
             if(!~indexOf.call(ownPs, '__proto__')) {
                 insertJSElement('__proto__', object, indent, parentNode, {
@@ -1319,7 +1324,7 @@ void function(global, factory) {
                 });
             }
         } else {
-            for(p of ownPs) {
+            forEach.call(ownPs, function(p) {
                 if(np) {
                     protoPara = node('p');
                     classList.add
@@ -1333,14 +1338,14 @@ void function(global, factory) {
                     );
                     append.call(parentNode || body, protoPara);
                 } else np = true;
-                for(pp of p[1]) {
+                forEach.call(p[ 1 ], function(pp) {
                     if(hasOwnProperty.call(p[0], pp)) {
                         //if(pp==='__proto__') object = null;
                         insertJSElement(pp, pp==='__proto__' ? p[ 0 ] : object, indent, parentNode, null, p[ 0 ]);
                     }
-                }
+                });
                 spSy(p[0]);
-            }
+            });
         }
     }
     function functionName(func) {
@@ -1374,12 +1379,12 @@ void function(global, factory) {
         } else if('undefined'!==typeof print) {
             jsout = print.bind(global);
         }
-        top: for(var ps of Object.getAllPropertyNames(global, true)) {
+        top: for(var i = 0, globals = Object.getAllPropertyNames(global, true), ps = globals[ i ], len = globals.length; i !== len; ps = globals[ ++i ]) {
             if(null!==ps[ 0 ]&&indent.length) {
                 jsout(Array(50).join('#'));
                 jsout(indent+'@__proto__: '+toString.call(ps[ 0 ]).match( toStringTag )[ 1 ]);
             }
-            for(var p of ps[1]) {
+            for(var j = 0, p = ps[ 1 ][ 0 ]; j !== ps[ 1 ].length; p = ps[ 1 ][ ++j ]) {
                 try {
                     ps[ 0 ][ p ];
                 } catch (e) {
@@ -1396,9 +1401,9 @@ void function(global, factory) {
                 jsout(Array(p.length+out.length+indent.length+3).join('-'));
             }
             if('function'===typeof Symbol) {
-                for(p of Object.getOwnPropertySymbols(ps[ 0 ])) {
-                    jsout(indent + '*['+p.description+']: '+(out = ps[ 0 ][ p ]));
-                    jsout(Array(p.description.length+out.length+indent.length+5).join('-'));
+                for(var k = 0, symbols = Object.getOwnPropertySymbols(ps[ 0 ]), s = symbols[ k ]; k !== symbols.length; s = symbols[ ++ k ]) {
+                    jsout(indent + '*['+s.description+']: '+(out = ps[ 0 ][ s ]));
+                    jsout(Array(s.description.length+out.length+indent.length+5).join('-'));
                 }
             }
             indent += Array(5).join(' ');
