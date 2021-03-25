@@ -33,7 +33,9 @@ void function(global, factory) {
      <+
      + Supports also in the other JS environments same as CommonJS ,NodeJS ,and CJS or there likes...
      */
-    if(!Object.getOwnPropertyNames) return;
+    if(!Object.getPrototypeOf||Object.getAllPropertyNames) {
+        return;
+    }
     exports = exports&&exports.Object||Object; // e?e.o:o; for undefined the globalThis and window in global strict e&e.o|o;
     var name = 'getAllPropertyNames';
     var bind = Function.prototype.bind || function bind(bound) {
