@@ -1,0 +1,18 @@
+{
+    "name": "JS @__at__ *all",
+    "version": "1.1",
+    "author": "Basel Al_hajeri:MBH",
+    "description": "A JS objects generator for showing the JS globals.",
+    "main": "JavaScript.js",
+    "repository": {
+        "type": "git",
+        "url": "https://github.com/Basel-Alhajeri-MBH/JS-__at__-all.git"
+    },
+    "scripts": {
+        "install": "node js/allKeys.js",
+        "update": "node js/allKeys.js"
+    },
+    "keywords": [
+        "Object.getAllPropertyNames"
+    ]
+}
